@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Button from '../ui/Button';
+import Button from '../ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ChatPanel({ messages, onSendMessage }) {
