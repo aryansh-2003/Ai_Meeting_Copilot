@@ -7,7 +7,7 @@ let io
 export function initSocket(server){
 io = new Server(server,{
     cors:{
-        origin: "*"
+        origin: process.env.LOCAL_URI
     }
 })
 

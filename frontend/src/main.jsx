@@ -2,11 +2,10 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { Provider } from 'react-redux'
 import store from './Store/store.js'
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, useNavigate } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, useNavigate } from 'react-router-dom'
 import App from './App.jsx'
 import LandingPage from './pages/LandingPage.jsx'
 import UserContextProvider from './context/UserContextProvider'
-import Localpage from './pages/Localpage'
 import HomePage from './pages/HomePage'
 
 
@@ -21,10 +20,6 @@ import HomePage from './pages/HomePage'
           {
             path:'/',
             element:<LandingPage/>
-          } ,
-           {
-            path:'/local',
-            element:<Localpage/>
           } ,
           {
             path:'/Home',
