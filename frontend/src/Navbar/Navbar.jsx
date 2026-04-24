@@ -13,7 +13,6 @@ const DownloadIcon = ({ className }) => (
 );
 
 function Navbar({ isRecording, transcripts = [], suggestionBatches = [],chatMessages = [] }) {
-  console.log(isRecording,transcripts,suggestionBatches,chatMessages)
   const [isSettingsOpen, setIsSettingsOpen] = useState(true);
   const [isDownloadOpen, setIsDownloadOpen] = useState(false); // Added state for the new dropdown
   const [apiKey, setApiKey] = useState('');

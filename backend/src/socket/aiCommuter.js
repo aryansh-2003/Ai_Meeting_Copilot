@@ -5,6 +5,7 @@ import { chatHistory } from "./chatHistory.js";
 
 
 
+
 const generateResponse = async (data) => {
     if(data?.apiKey === null) return ["Please provide apikey"]
     try {
@@ -39,6 +40,7 @@ const generateResponse = async (data) => {
         return final_Suggestions
     } catch (error) {
         console.log("Error Generating Response",error)
+        return error
     }
 }
 
@@ -61,6 +63,8 @@ const generateText = async (data) => {
             return response.text
         } catch (error) {
             console.log("Error Generating Response",error)
+           return error
+
         }
     }
 
@@ -68,25 +72,33 @@ const generateText = async (data) => {
 
     const searchQuery = async (userQuery, transcriptContext,apiKey) => {
      if(apiKey === null) return "Please provide apikey"
-        const groq = new Groq({
-            apiKey: apiKey
-        })
-        const completion = await groq.chat.completions.create({
-        model: "openai/gpt-oss-120b",
-        messages: [
-        { 
-            role: "system", 
-            content: `You are an AI meeting assistant. Meeting context so far: ${transcriptContext}` 
-        },
-        ...chatHistory,
-        { 
-            role: "user", 
-            content: userQuery 
-        }
-        ],
-        temperature: 0.5, 
-    });
-       return (completion.choices[0].message.content)
+       try {
+         const groq = new Groq({
+             apiKey: apiKey
+         })
+         const completion = await groq.chat.completions.create({
+         model: "openai/gpt-oss-120b",
+         messages: [
+         { 
+             role: "system", 
+             content: `You are an AI meeting assistant and context so far is given and according to user query you have to produce accurate,
+              intellectual and  related to context response. summarize the response so it can be read in meeting.Meeting context so far: ${transcriptContext}` 
+         },
+         ...chatHistory,
+         { 
+             role: "user", 
+             content: userQuery 
+         }
+         ],
+         temperature: 0.5, 
+     });
+        return (completion.choices[0].message.content)
+       } catch (error) {
+                    console.log("Error Generating Response",error)
+
+          return error
+        
+       }
     }
 
 export {generateResponse,generateText,searchQuery}

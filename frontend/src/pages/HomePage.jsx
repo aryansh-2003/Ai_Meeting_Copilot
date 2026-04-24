@@ -7,6 +7,7 @@ import { socket } from '../../service/socket.service';
 import Navbar from '../Navbar/Navbar';
 import userContext from '../context/userContext'
 
+
   alert("Please insert your Groq-Api key first in setting to enjoy the features!!")
 
 
@@ -83,6 +84,10 @@ export default function HomePage() {
     }
 
     const handleNewTranscription = (data) => {
+      if(Object.keys(data).length === 0){
+         alert("Something went wrong Reload the page")
+         return
+        }
       setTranscripts(current => [
         ...current,
         {
@@ -95,6 +100,11 @@ export default function HomePage() {
     };
 
     const handleNewSuggestion = (data) => {
+        if(Object.keys(data).length === 0){
+         alert("Something went wrong Reload the page")
+         return
+        }
+
       const newSuggestionBatch = [
         { type: 'TALKING POINT', text: data.Response[1] || "No point generated" ,time: Date.now()},
         { type: 'FACT-CHECK', text: data.Response[2] || "No fact generated" ,time:Date.now()},
@@ -138,6 +148,10 @@ export default function HomePage() {
   useEffect(() => {
   
     const handleMessageReply = (data) => {
+            if(Object.keys(data).length === 0){
+         alert("Something went wrong Reload the page")
+         return
+        }
       const newBotMsg = {
         id: crypto.randomUUID(),
         role: 'ASSISTANT',
@@ -190,11 +204,11 @@ export default function HomePage() {
         if (mediarecorder.state === "recording") {
           mediarecorder.stop();
         }
-      }, 6000);
+      }, 10000);
     };
 
     againRecording();
-    intervalRef.current = setInterval(againRecording, 6000);
+    intervalRef.current = setInterval(againRecording, 10000);
     setIsRecording(true);
   }
 
@@ -223,6 +237,8 @@ export default function HomePage() {
   return (
     <div className="relative h-screen text-slate-200 font-sans flex flex-col overflow-hidden bg-[#0A0F1C] selection:bg-indigo-500/30 antialiased">
       <AmbientBackground isRecording={isRecording} />
+
+ 
 
       <Navbar isRecording={isRecording} transcripts={transcripts} suggestionBatches={suggestionBatches} chatMessages={chatMessages} />
       {groqKey ?
@@ -259,12 +275,9 @@ export default function HomePage() {
             />
           </motion.div>
         </motion.div>
-              <button onClick={() => exportConversationData()}  className='bg-red-200 text-xl text-amber-950'> Download all</button>
-
       </main> : 
       ""
       }
-
 
     </div>
   );

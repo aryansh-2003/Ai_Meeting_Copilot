@@ -40,7 +40,7 @@ io.on("connection",(socket) => {
     })
 
     socket.on("answerTheQues",async(data) => {
-        // console.log(data)
+        if(chatHistory.length > 10) chatHistory.pop()
         chatHistory.push({ 
             role: "user", 
             content: data?.query 
@@ -48,6 +48,7 @@ io.on("connection",(socket) => {
        const ans = await searchQuery(data?.query,data?.context,data.apiKey)
        if(ans){
            socket.emit("messageReply",ans)
+           if(chatHistory.length > 10) chatHistory.pop()
            chatHistory.push({ 
             role: "assistant", 
             content: ans 
