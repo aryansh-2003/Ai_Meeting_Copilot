@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import userContext from '../context/userContext';
 
-function Navbar({ isRecording, transcripts = [], suggestionBatches = [], chatMessages = [] }) {
+function Navbar({ isRecording, transcripts = [], suggestionBatches = [], chatMessages = [], theme = 'light' }) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [status, setStatus] = useState('idle');
@@ -39,7 +39,7 @@ function Navbar({ isRecording, transcripts = [], suggestionBatches = [], chatMes
         <header className="w-full flex justify-between items-center px-6">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <h1 className="font-medium text-4xl text-[#231917] tracking-tight">
+            <h1 className={`font-medium text-4xl tracking-tight ${theme === 'dark' ? 'text-slate-200' : 'text-[#231917]'}`}>
               Aaco
             </h1>
           </div>
@@ -58,7 +58,7 @@ function Navbar({ isRecording, transcripts = [], suggestionBatches = [], chatMes
                 onClick={() => {
                   setIsSettingsOpen(!isSettingsOpen);
                 }}
-                className="font-mono text-[15px] text-[#231917] hover:text-[#FF6840] tracking-wide transition-colors"
+                className={`font-mono text-[15px] hover:text-[#FF6840] tracking-wide transition-colors ${theme === 'dark' ? 'text-slate-200' : 'text-[#231917]'}`}
               >
                 Settings
               </button>

@@ -8,10 +8,6 @@ import Navbar from '../Navbar/Navbar';
 import userContext from '../context/userContext'
 
 
-  alert("Please insert your Groq-Api key first in setting to enjoy the features!!")
-
-
-
 
 const AmbientBackground = memo(({ isRecording }) => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0B0F14]">
@@ -219,44 +215,65 @@ export default function HomePage() {
 
  
 
-      <Navbar isRecording={isRecording} transcripts={transcripts} suggestionBatches={suggestionBatches} chatMessages={chatMessages} />
-      {groqKey ?
-            <main className="relative z-10 flex-1 min-h-0 p-6 pt-32">
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full max-w-[1600px] mx-auto"
-        >
+      <Navbar isRecording={isRecording} transcripts={transcripts} suggestionBatches={suggestionBatches} chatMessages={chatMessages} theme="dark" />
+      
+      {groqKey ? (
+        <main className="relative z-10 flex-1 min-h-0 p-6 pt-32">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full max-w-[1600px] mx-auto"
+          >
+            <motion.div variants={itemVariants} className="h-full rounded-3xl bg-[#1D242B]/90 border border-[#5eead4]/30 shadow-[inset_0_0_20px_rgba(94,234,212,0.08),0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl overflow-hidden flex flex-col transition-colors duration-300">
+              <TranscriptPanel
+                isRecording={isRecording}
+                onToggleRecording={handleToggleRecording}
+                transcripts={transcripts}
+              />
+            </motion.div>
 
-          <motion.div variants={itemVariants} className="h-full rounded-3xl bg-[#1D242B]/90 border border-[#5eead4]/30 shadow-[inset_0_0_20px_rgba(94,234,212,0.08),0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl overflow-hidden flex flex-col transition-colors duration-300">
-            <TranscriptPanel
-              isRecording={isRecording}
-              onToggleRecording={handleToggleRecording}
-              transcripts={transcripts}
-            />
-          </motion.div>
+            <motion.div variants={itemVariants} className="h-full rounded-3xl bg-[#1D242B]/90 border border-[#5eead4]/30 shadow-[inset_0_0_20px_rgba(94,234,212,0.08),0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl overflow-hidden flex flex-col transition-colors duration-300">
+              <SuggestionsPanel
+                batches={suggestionBatches}
+                onSuggestionClick={(sug) => handleSendMessage(sug)}
+                onReload={handleManualReload} 
+                countdown={countdown} 
+                isRecording={isRecording}
+              />
+            </motion.div>
 
-          <motion.div variants={itemVariants} className="h-full rounded-3xl bg-[#1D242B]/90 border border-[#5eead4]/30 shadow-[inset_0_0_20px_rgba(94,234,212,0.08),0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl overflow-hidden flex flex-col transition-colors duration-300">
-            <SuggestionsPanel
-              batches={suggestionBatches}
-              onSuggestionClick={(sug) => handleSendMessage(sug)}
-              onReload={handleManualReload} 
-              countdown={countdown} 
-              isRecording={isRecording}
-            />
+            <motion.div variants={itemVariants} className="h-full rounded-3xl bg-[#1D242B]/90 border border-[#5eead4]/30 shadow-[inset_0_0_20px_rgba(94,234,212,0.08),0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl overflow-hidden flex flex-col transition-colors duration-300">
+              <ChatPanel
+                messages={chatMessages}
+                onSendMessage={handleSendMessage}
+              />
+            </motion.div>
           </motion.div>
-
-          <motion.div variants={itemVariants} className="h-full rounded-3xl bg-[#1D242B]/90 border border-[#5eead4]/30 shadow-[inset_0_0_20px_rgba(94,234,212,0.08),0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl overflow-hidden flex flex-col transition-colors duration-300">
-            <ChatPanel
-              messages={chatMessages}
-              onSendMessage={handleSendMessage}
-            />
+        </main>
+      ) : (
+        <div className="relative z-10 flex-1 flex items-center justify-center min-h-screen">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-[#1D242B]/90 border border-red-500/30 p-10 rounded-[32px] shadow-[0_0_40px_rgba(239,68,68,0.15)] max-w-md text-center backdrop-blur-3xl"
+          >
+            <div className="w-20 h-20 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-8">
+              <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+              </svg>
+            </div>
+            <h2 className="text-3xl font-bold text-slate-200 mb-4 font-inter tracking-tight">API Key Required</h2>
+            <p className="text-slate-400 font-mono text-[15px] leading-relaxed mb-8">
+              Please insert your <span className="text-[#A8FFDB]">Groq API key</span> in the settings menu to activate Aaco's advanced intelligence features.
+            </p>
+            <div className="inline-flex items-center gap-3 text-red-400/80 text-sm font-mono tracking-widest uppercase">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Waiting for config
+            </div>
           </motion.div>
-        </motion.div>
-      </main> : 
-      ""
-      }
+        </div>
+      )}
 
     </div>
   );
