@@ -7,6 +7,8 @@ import App from './App.jsx'
 import LandingPage from './pages/LandingPage.jsx'
 import UserContextProvider from './context/UserContextProvider'
 import HomePage from './pages/HomePage'
+import AgenticStadiumDashboard from './pages/Home'
+
 
 
 
@@ -24,6 +26,10 @@ import HomePage from './pages/HomePage'
           {
             path:'/Home',
             element:<HomePage/>
+          } ,
+          {
+            path:'/Status',
+            element:<AgenticStadiumDashboard/>
           } 
         ]
       }

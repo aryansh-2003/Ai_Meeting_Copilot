@@ -22,15 +22,14 @@ export default function ChatPanel({ messages, onSendMessage }) {
   };
 
   return (
-    <div className="relative flex flex-col h-full min-h-0 w-full rounded-2xl overflow-hidden bg-gradient-to-b from-white/[0.04] to-transparent">
+    <div className="relative flex flex-col h-full min-h-0 w-full rounded-2xl overflow-hidden bg-transparent">
       
       {/* --- Header --- */}
-      <div className="flex justify-between items-center px-5 py-4 border-b border-white/[0.05] bg-black/20 backdrop-blur-md shrink-0 z-10">
-        <h2 className="text-xs font-bold text-gray-400 tracking-widest uppercase flex items-center gap-2">
-          <span className="w-1 h-3 rounded-full bg-cyan-500/80 shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
+      <div className="flex justify-between items-center px-5 py-4 border-b border-[#4ade80]/20 bg-transparent shrink-0 z-10">
+        <h2 className="text-sm font-bold text-slate-200 tracking-wide flex items-center gap-2">
           3. Chat Details
         </h2>
-        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-md border border-white/[0.05]">
+        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest bg-slate-800/80 px-2 py-1 rounded-md border border-slate-700/50">
           Session-Only
         </span>
       </div>
@@ -39,14 +38,14 @@ export default function ChatPanel({ messages, onSendMessage }) {
       <div className="flex-1 overflow-y-auto p-5 space-y-6 z-0
         [&::-webkit-scrollbar]:w-1.5 
         [&::-webkit-scrollbar-track]:bg-transparent 
-        [&::-webkit-scrollbar-thumb]:bg-white/10 
+        [&::-webkit-scrollbar-thumb]:bg-slate-700 
         [&::-webkit-scrollbar-thumb]:rounded-full 
-        hover:[&::-webkit-scrollbar-thumb]:bg-white/20"
+        hover:[&::-webkit-scrollbar-thumb]:bg-slate-600"
       >
         
         {/* Info Banner */}
-        <div className="relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 text-sm text-gray-400 leading-relaxed shadow-inner">
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500/50 to-blue-500/50 rounded-l-xl"></div>
+        <div className="relative bg-[#1C2127]/60 border border-slate-700/50 rounded-xl p-4 text-sm text-slate-400 leading-relaxed shadow-sm">
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#4ade80]/50 rounded-l-xl"></div>
           Clicking a suggestion adds it to this chat and streams a detailed answer. You can also type directly below.
         </div>
 
@@ -67,11 +66,11 @@ export default function ChatPanel({ messages, onSendMessage }) {
                 >
                   <div className="flex items-center gap-2 mb-1.5 px-1">
                     {!isUser && (
-                      <div className="w-5 h-5 rounded flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 shadow-[0_0_10px_rgba(6,182,212,0.3)]">
+                      <div className="w-5 h-5 rounded flex items-center justify-center bg-[#252B33] border border-slate-700 shadow-sm">
                         <span className="text-[10px] font-bold text-white">AI</span>
                       </div>
                     )}
-                    <span className="text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                    <span className="text-[10px] text-slate-500 font-bold tracking-widest uppercase">
                       {msg.role}
                     </span>
                   </div>
@@ -79,8 +78,8 @@ export default function ChatPanel({ messages, onSendMessage }) {
                   <div 
                     className={`relative p-4 max-w-[90%] text-sm leading-relaxed shadow-md backdrop-blur-sm transition-all duration-300
                       ${isUser 
-                        ? 'bg-white/[0.05] border border-white/[0.1] text-gray-200 rounded-2xl rounded-tr-sm hover:bg-white/[0.08]' 
-                        : 'bg-cyan-900/[0.15] border border-cyan-500/[0.2] text-gray-100 rounded-2xl rounded-tl-sm hover:border-cyan-500/40'
+                        ? 'bg-[#2A3038] border border-slate-700/50 text-slate-200 rounded-2xl rounded-tr-sm hover:bg-[#313841]' 
+                        : 'bg-[#1C2127] border border-[#5eead4]/20 text-slate-300 rounded-2xl rounded-tl-sm hover:border-[#5eead4]/40 shadow-[0_0_15px_rgba(94,234,212,0.05)]'
                       }`}
                   >
                     {/* Glass glare effect inside the bubble */}
@@ -104,17 +103,17 @@ export default function ChatPanel({ messages, onSendMessage }) {
       </div>
 
       {/* --- Input Area --- */}
-      <div className="relative p-4 border-t border-white/[0.05] bg-black/40 backdrop-blur-xl shrink-0 z-10">
+      <div className="relative p-4 border-t border-[#4ade80]/20 bg-[#171C22]/80 backdrop-blur-xl shrink-0 z-10 rounded-b-2xl">
         <form onSubmit={handleSubmit} className="flex gap-3 relative">
           {/* Animated Glow Behind Input */}
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none rounded-full" />
+          <div className="absolute inset-0 bg-[#4ade80]/5 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none rounded-full" />
           
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask anything..."
-            className="flex-1 bg-white/[0.03] border border-white/[0.1] rounded-xl px-5 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.05] focus:ring-1 focus:ring-cyan-500/50 shadow-inner transition-all relative z-10"
+            className="flex-1 bg-transparent border border-[#4ade80]/30 rounded-full px-5 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#4ade80] focus:bg-[#4ade80]/5 shadow-sm transition-all relative z-10"
           />
           
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.95 }} className="relative z-10">
@@ -123,8 +122,8 @@ export default function ChatPanel({ messages, onSendMessage }) {
               variant="primary" 
               className={`h-full px-6 py-3 rounded-xl font-medium tracking-wide transition-all shadow-lg
                 ${!input.trim() 
-                  ? 'bg-white/5 border border-white/10 text-gray-500 cursor-not-allowed' 
-                  : 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)] border-none'
+                  ? 'bg-transparent border border-slate-700/50 text-slate-500 cursor-not-allowed' 
+                  : 'bg-transparent border border-[#4ade80]/50 hover:bg-[#4ade80]/10 text-[#4ade80]'
                 }`}
               disabled={!input.trim()}
             >

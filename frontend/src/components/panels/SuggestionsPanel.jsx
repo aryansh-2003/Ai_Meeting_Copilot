@@ -10,15 +10,15 @@ export default function SuggestionsPanel({ batches, onSuggestionClick, onReload,
   const getTagStyle = (type) => {
     switch(type) {
       case 'ANSWER': 
-        return 'text-emerald-300 border-emerald-500/30 bg-emerald-500/10';
+        return 'text-[#4ade80] border-[#4ade80]/30 bg-[#4ade80]/10';
       case 'FACT-CHECK': 
         return 'text-amber-300 border-amber-500/30 bg-amber-500/10';
       case 'QUESTION TO ASK': 
         return 'text-sky-300 border-sky-500/30 bg-sky-500/10';
       case 'TALKING POINT': 
-        return 'text-indigo-300 border-indigo-500/30 bg-indigo-500/10';
+        return 'text-[#5eead4] border-[#5eead4]/30 bg-[#5eead4]/10';
       default: 
-        return 'text-slate-300 border-slate-400/30 bg-slate-400/10';
+        return 'text-slate-300 border-slate-500/30 bg-slate-500/10';
     }
   };
 
@@ -29,9 +29,8 @@ export default function SuggestionsPanel({ batches, onSuggestionClick, onReload,
     <div className="relative flex flex-col h-full min-h-0 w-full rounded-2xl overflow-hidden bg-transparent">
       
       {/* --- Header --- */}
-      <div className="flex justify-between items-center px-5 py-4 border-b border-slate-700/50 bg-[#131B2C]/90 backdrop-blur-md shrink-0 z-10">
-        <h2 className="text-xs font-bold text-slate-300 tracking-widest uppercase flex items-center gap-2">
-          <span className="w-1.5 h-3 rounded-full bg-indigo-500"></span>
+      <div className="flex justify-between items-center px-5 py-4 border-b border-[#4ade80]/20 bg-transparent shrink-0 z-10">
+        <h2 className="text-sm font-bold text-slate-200 tracking-wide flex items-center gap-2">
           2. Live Suggestions
         </h2>
         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-800/80 px-2 py-1 rounded-md border border-slate-700/50">
@@ -40,25 +39,25 @@ export default function SuggestionsPanel({ batches, onSuggestionClick, onReload,
       </div>
 
       {/* --- Controls & Progress Section --- */}
-      <div className="relative p-4 border-b border-slate-700/50 bg-slate-800/20 flex justify-between items-center shrink-0 z-10 overflow-hidden">
+      <div className="relative p-4 border-b border-[#4ade80]/10 bg-transparent flex justify-between items-center shrink-0 z-10 overflow-hidden">
         <Button 
           variant="secondary" 
           onClick={onReload}
-          className="relative z-10 bg-slate-800 hover:bg-slate-700 border border-slate-600 shadow-sm transition-all text-xs py-1.5 text-slate-200"
+          className="relative z-10 bg-slate-800/50 hover:bg-slate-700 border border-slate-600/50 shadow-sm transition-all text-xs py-1.5 text-slate-300"
         >
           <RefreshIcon className="opacity-70" /> Reload
         </Button>
         
         <div className="flex flex-col items-end gap-1 relative z-10">
-          <span className="text-[10px] text-slate-400 font-mono tracking-wider">
+          <span className="text-[10px] text-slate-500 font-mono tracking-wider">
             {isRecording ? `AUTO-REFRESH IN ${countdown}S` : 'PAUSED'}
           </span>
         </div>
 
         {/* PERFORMANCE FIX: Animated scaleX instead of width. GPU accelerated. */}
-        <div className="absolute bottom-0 left-0 h-[2px] bg-slate-700/30 w-full">
+        <div className="absolute bottom-0 left-0 h-[2px] bg-slate-800/50 w-full">
           <motion.div 
-            className="h-full bg-indigo-500 origin-left"
+            className="h-full bg-[#4ade80] origin-left shadow-[0_0_10px_rgba(74,222,128,0.5)]"
             animate={{ scaleX: progressScale }}
             transition={{ duration: 1, ease: "linear" }}
             style={{ willChange: "transform" }}
@@ -77,7 +76,7 @@ export default function SuggestionsPanel({ batches, onSuggestionClick, onReload,
         
         {/* Info Banner */}
         <div className="relative bg-slate-800/30 border border-slate-700/50 rounded-xl p-4 text-sm text-slate-400 leading-relaxed">
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500/50 rounded-l-xl"></div>
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#4ade80]/50 rounded-l-xl"></div>
           While recording, every <strong className="text-slate-200 font-medium">30 seconds</strong> we gather recent context and generate 3 fresh suggestions.
         </div>
 
@@ -101,7 +100,7 @@ export default function SuggestionsPanel({ batches, onSuggestionClick, onReload,
               {/* Batch Divider */}
               <div className="flex items-center gap-4 pt-2">
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-600/50 to-transparent"></div>
-                <span className="text-[9px] text-slate-500 font-bold tracking-widest uppercase bg-[#131B2C] px-3 py-1 rounded-full border border-slate-700/50">
+                <span className="text-[9px] text-slate-500 font-bold tracking-widest uppercase bg-[#171C22] px-3 py-1 rounded-full border border-slate-700/50">
                   Batch {batch.batchNum} <span className="opacity-50 mx-1">·</span> {batch.time}
                 </span>
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-600/50 to-transparent"></div>
@@ -118,7 +117,7 @@ export default function SuggestionsPanel({ batches, onSuggestionClick, onReload,
                     transition={{ delay: sugIndex * 0.05 }} // Snappier stagger
                     whileHover={{ scale: 1.01, x: 2 }}
                     whileTap={{ scale: 0.98 }}
-                    className="relative w-full text-left bg-slate-800/40 border border-slate-700/50 hover:border-indigo-500/50 hover:bg-slate-800/80 rounded-xl p-4 transition-all duration-200 group cursor-pointer overflow-hidden shadow-sm"
+                    className="relative w-full text-left bg-[#1C2127]/60 border border-slate-700/50 hover:border-[#4ade80]/50 hover:bg-[#1C2127] rounded-xl p-4 transition-all duration-200 group cursor-pointer overflow-hidden shadow-sm"
                   >                 
 
                     {/* Professional subtle highlight instead of heavy gradient */}
@@ -127,7 +126,8 @@ export default function SuggestionsPanel({ batches, onSuggestionClick, onReload,
                     <span className={`inline-block px-2.5 py-1 rounded-md text-[9px] font-bold tracking-widest uppercase border mb-3 ${getTagStyle(sug.type)}`}>
                       {sug.type}
                     </span>
-                    <p className="text-sm text-slate-300 font-normal leading-relaxed tracking-wide group-hover:text-slate-100 transition-colors duration-200 relative z-10">
+                    <p className="text-sm text-slate-300 font-normal leading-relaxed tracking-wide group-hover:text-white transition-colors duration-200 relative z-10 flex items-center gap-3">
+                      <div className="w-4 h-4 rounded border border-slate-500/50 group-hover:border-[#4ade80]/50 flex items-center justify-center transition-colors"></div>
                       {sug.text}
                     </p>
                   </motion.button>

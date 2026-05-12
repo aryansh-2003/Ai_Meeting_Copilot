@@ -10,31 +10,30 @@ export default function TranscriptPanel({ isRecording, onToggleRecording, transc
   return (
     // Removed hardcoded opaque backgrounds, letting the parent's glassmorphism shine through
     // Added a subtle inner gradient and overlay for depth
-    <div className="relative flex flex-col h-full min-h-0 w-full rounded-2xl overflow-hidden bg-gradient-to-b from-white/[0.04] to-transparent">
+    <div className="relative flex flex-col h-full min-h-0 w-full rounded-2xl overflow-hidden bg-transparent">
       
       {/* --- Header --- */}
-      <div className="flex justify-between items-center px-5 py-4 border-b border-white/[0.05] bg-black/20 backdrop-blur-md shrink-0 z-10">
-        <h2 className="text-xs font-bold text-gray-400 tracking-widest uppercase flex items-center gap-2">
-          <span className="w-1 h-3 rounded-full bg-blue-500/80 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+      <div className="flex justify-between items-center px-5 py-4 border-b border-[#4ade80]/20 bg-transparent shrink-0 z-10">
+        <h2 className="text-sm font-bold text-slate-200 tracking-wide flex items-center gap-2">
           1. Mic & Transcript
         </h2>
         
         {/* Animated Status Badge */}
         <div className="flex items-center gap-2">
-          <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 ${isRecording ? 'text-red-400' : 'text-gray-500'}`}>
+          <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 ${isRecording ? 'text-[#4ade80]' : 'text-slate-500'}`}>
             {isRecording ? 'Recording Live' : 'Idle'}
           </span>
           {isRecording && (
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4ade80] shadow-[0_0_8px_rgba(74,222,128,0.8)]"></span>
             </span>
           )}
         </div>
       </div>
       
       {/* --- Controls Section --- */}
-      <div className="relative p-4 border-b border-white/[0.05] bg-white/[0.01] flex items-center gap-4 shrink-0 overflow-hidden z-10">
+      <div className="relative p-4 border-b border-[#4ade80]/10 bg-transparent flex items-center gap-4 shrink-0 overflow-hidden z-10">
         {/* Subtle animated glow behind the mic when recording */}
         <AnimatePresence>
           {isRecording && (
@@ -42,7 +41,7 @@ export default function TranscriptPanel({ isRecording, onToggleRecording, transc
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute left-4 w-12 h-12 bg-red-500/20 rounded-full blur-xl pointer-events-none"
+              className="absolute left-4 w-12 h-12 bg-[#4ade80]/20 rounded-full blur-xl pointer-events-none"
             />
           )}
         </AnimatePresence>
@@ -55,10 +54,10 @@ export default function TranscriptPanel({ isRecording, onToggleRecording, transc
         />
         
         <div className="flex flex-col">
-          <span className="text-sm font-medium text-gray-200">
+          <span className="text-sm font-medium text-slate-200">
             {isRecording ? 'Listening actively' : 'Microphone paused'}
           </span>
-          <span className="text-[11px] text-gray-500">
+          <span className="text-[11px] text-slate-400">
             {isRecording ? 'Transcribing audio stream...' : 'Click to start capture'}
           </span>
         </div>
@@ -69,9 +68,9 @@ export default function TranscriptPanel({ isRecording, onToggleRecording, transc
       <div className="flex-1 overflow-y-auto p-5 space-y-4 z-0 
         [&::-webkit-scrollbar]:w-1.5 
         [&::-webkit-scrollbar-track]:bg-transparent 
-        [&::-webkit-scrollbar-thumb]:bg-white/10 
+        [&::-webkit-scrollbar-thumb]:bg-slate-700 
         [&::-webkit-scrollbar-thumb]:rounded-full 
-        hover:[&::-webkit-scrollbar-thumb]:bg-white/20"
+        hover:[&::-webkit-scrollbar-thumb]:bg-slate-600"
       >
         {/* AnimatePresence handles elements entering and leaving the DOM */}
         <AnimatePresence mode="popLayout">
@@ -89,20 +88,19 @@ export default function TranscriptPanel({ isRecording, onToggleRecording, transc
               }}
               className="flex gap-4 group"
             >
-              {/* Timeline Column */}
-              <div className="flex flex-col items-center pt-1 gap-1 w-16 shrink-0">
-                <span className="text-[10px] font-mono text-gray-500/60 whitespace-nowrap group-hover:text-gray-400 transition-colors">
-                  {t.time.replace(/ AM| PM/g, '')} {/* Cleans up time string slightly if desired */}
+              {/* Timeline Column (Hidden for pure text feel, or subtle) */}
+              <div className="flex flex-col items-center pt-1 gap-1 w-12 shrink-0 opacity-50">
+                <span className="text-[10px] font-mono text-slate-500 whitespace-nowrap">
+                  {t.time.replace(/ AM| PM/g, '')}
                 </span>
               </div>
 
-              {/* Message Bubble */}
-              <div className="relative bg-white/[0.03] border border-white/[0.05] p-3.5 rounded-2xl rounded-tl-sm w-full shadow-sm group-hover:bg-white/[0.06] group-hover:border-white/[0.1] transition-all duration-300">
-                <p className="text-sm text-gray-200 leading-relaxed font-light tracking-wide">
+              {/* Message Raw Text */}
+              <div className="relative w-full">
+                <p className="text-[15px] text-slate-300 leading-relaxed font-light">
+                  <span className="text-[#4ade80] font-medium mr-2">SPEAKER 1:</span>
                   {t.text}
                 </p>
-                {/* Subtle glass reflection highlight */}
-                <div className="absolute inset-0 rounded-2xl rounded-tl-sm pointer-events-none border border-white/[0.02] mix-blend-overlay"></div>
               </div>
             </motion.div>
           ))}

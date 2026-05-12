@@ -13,32 +13,11 @@ import userContext from '../context/userContext'
 
 
 
-
 const AmbientBackground = memo(({ isRecording }) => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0A0F1C]">
-    <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_80%,transparent_100%)]" />
-    
-    <motion.div
-      animate={{
-        opacity: isRecording ? [0.15, 0.25, 0.15] : [0.1, 0.15, 0.1],
-        scale: isRecording ? [1, 1.05, 1] : 1,
-      }}
-      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      className={`absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full ${
-        isRecording 
-          ? 'bg-[radial-gradient(circle,rgba(220,38,38,0.15)_0%,transparent_70%)]' 
-          : 'bg-[radial-gradient(circle,rgba(59,130,246,0.15)_0%,transparent_70%)]'
-      }`}
-      style={{ willChange: "transform, opacity" }}
-    />
-    <motion.div
-      animate={{
-        opacity: [0.05, 0.1, 0.05],
-      }}
-      transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-[radial-gradient(circle,rgba(99,102,241,0.1)_0%,transparent_70%)] rounded-full"
-      style={{ willChange: "transform, opacity" }}
-    />
+  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0B0F14]">
+    <div className="absolute top-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-[#4ade80] rounded-full blur-[150px] opacity-20" />
+    <div className="absolute bottom-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-[#4ade80] rounded-full blur-[150px] opacity-20" />
+    <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_80%,transparent_100%)] mix-blend-overlay" />
   </div>
 ));
 
@@ -51,11 +30,11 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 40 },
   show: { 
     opacity: 1, 
     y: 0, 
-    transition: { type: "spring", stiffness: 120, damping: 20 } // Snappier, more professional spring
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
   }
 };
 
@@ -235,14 +214,14 @@ export default function HomePage() {
 
 
   return (
-    <div className="relative h-screen text-slate-200 font-sans flex flex-col overflow-hidden bg-[#0A0F1C] selection:bg-indigo-500/30 antialiased">
+    <div className="relative h-screen text-slate-200 font-sans flex flex-col overflow-hidden bg-[#0B0F14] selection:bg-[#4ade80]/30 selection:text-white antialiased">
       <AmbientBackground isRecording={isRecording} />
 
  
 
       <Navbar isRecording={isRecording} transcripts={transcripts} suggestionBatches={suggestionBatches} chatMessages={chatMessages} />
       {groqKey ?
-            <main className="relative z-10 flex-1 min-h-0 p-6 pt-2">
+            <main className="relative z-10 flex-1 min-h-0 p-6 pt-32">
         <motion.div 
           variants={containerVariants}
           initial="hidden"
@@ -250,7 +229,7 @@ export default function HomePage() {
           className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full max-w-[1600px] mx-auto"
         >
 
-          <motion.div variants={itemVariants} className="h-full rounded-2xl bg-[#131B2C]/80 border border-slate-700/50 shadow-xl backdrop-blur-md overflow-hidden flex flex-col hover:border-indigo-500/30 transition-colors duration-300">
+          <motion.div variants={itemVariants} className="h-full rounded-3xl bg-[#1D242B]/90 border border-[#5eead4]/30 shadow-[inset_0_0_20px_rgba(94,234,212,0.08),0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl overflow-hidden flex flex-col transition-colors duration-300">
             <TranscriptPanel
               isRecording={isRecording}
               onToggleRecording={handleToggleRecording}
@@ -258,7 +237,7 @@ export default function HomePage() {
             />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="h-full rounded-2xl bg-[#131B2C]/80 border border-slate-700/50 shadow-xl backdrop-blur-md overflow-hidden flex flex-col hover:border-indigo-500/30 transition-colors duration-300">
+          <motion.div variants={itemVariants} className="h-full rounded-3xl bg-[#1D242B]/90 border border-[#5eead4]/30 shadow-[inset_0_0_20px_rgba(94,234,212,0.08),0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl overflow-hidden flex flex-col transition-colors duration-300">
             <SuggestionsPanel
               batches={suggestionBatches}
               onSuggestionClick={(sug) => handleSendMessage(sug)}
@@ -268,7 +247,7 @@ export default function HomePage() {
             />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="h-full rounded-2xl bg-[#131B2C]/80 border border-slate-700/50 shadow-xl backdrop-blur-md overflow-hidden flex flex-col hover:border-indigo-500/30 transition-colors duration-300">
+          <motion.div variants={itemVariants} className="h-full rounded-3xl bg-[#1D242B]/90 border border-[#5eead4]/30 shadow-[inset_0_0_20px_rgba(94,234,212,0.08),0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl overflow-hidden flex flex-col transition-colors duration-300">
             <ChatPanel
               messages={chatMessages}
               onSendMessage={handleSendMessage}
